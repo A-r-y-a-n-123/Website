@@ -1,0 +1,114 @@
+<div>
+    <h1 class="h1">{{title}} is a <b><i>{{purpose}}</i></b> website💪</h1>
+    <p class="p1" style="background-color: black; color: chartreuse;">Website is currently under testing !</p>
+</div>
+<div class="bar1">
+    <a href="#" class="iconbar1" (click)="showcontent('notifications')" data-toggle='tooltip' title="Notifications"><i class="fa fa-envelope"></i></a> 
+    <a href="#" class="iconbar1" (click)="showcontent('delete')" data-toggle='tooltip' title="Delete notifications and registered accounts"><i class="fa fa-trash"></i></a> 
+    <a href="#" class="iconbar1" (click)="showcontent('settings')" data-toggle='tooltip' title="User settings"><i class="fa fa-user"></i></a> 
+    <a href="#" class="iconbar1" (click)="showcontent('about')" data-toggle='tooltip' title="About us"><i class="fa fa-info-circle"></i></a>
+    <a href="#" class="iconbar1" (click)="showcontent('start')" data-toggle='tooltip' title="Start"><i class="fa fa-star"></i></a> 
+</div>
+<script>
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();   
+    });
+</script>
+<br>
+<div class="container1">  
+    <ng-container [ngSwitch]="currentcontent">
+      <div *ngSwitchCase="'notifications'">
+          <h1>Notifications Content</h1>
+          <p>Here you can view notifications.</p>
+          <ul>
+            <p style="color: red;" *ngFor="let message of notificationMessages">{{ message }}</p>
+          </ul>
+      </div>
+      <div *ngSwitchCase="'delete'">
+          <h1>Delete Content</h1>
+          <p>Here you can delete notifications and registered accounts.</p>
+          <button (click)="deleteNotifications()">Delete All Notifications</button>
+      </div>
+      <div>
+        <div *ngIf="!isLoggedIn">
+          <!-- Show sign up and sign in forms -->
+          <div *ngSwitchCase="'settings'">
+            <button (click)="showForm('signup')">Sign Up</button>
+            <button (click)="showForm('login')">Login</button>
+            
+            <!-- Sign Up Form -->
+            <div *ngIf="formType === 'signup'">
+                <h2>Sign Up</h2>
+                <form (ngSubmit)="onSignUp()">
+                    <div>
+                        <label for="signup-username">Username:</label>
+                        <input type="text" id="signup-username" [(ngModel)]="signupUsername" name="username" required>
+                    </div>
+                    <div>
+                        <label for="signup-email">Email:</label>
+                        <input type="email" id="signup-email" [(ngModel)]="signupEmail" name="email" required>
+                    </div>
+                    <div>
+                        <label for="signup-password">Password:</label>
+                        <input type="password" id="signup-password" [(ngModel)]="signupPassword" name="password" required>
+                    </div>
+                    <button type="submit">Sign Up</button>
+                </form>
+            </div>
+            
+            <!-- Login Form -->
+            <div *ngIf="formType === 'login'">
+                <h2>Login</h2>
+                <form (ngSubmit)="onLogin()">
+                    <div>
+                        <label for="login-username">Username:</label>
+                        <input type="text" id="login-username" [(ngModel)]="loginUsername" name="username" required>
+                    </div>
+                    <div>
+                        <label for="login-password">Password:</label>
+                        <input type="password" id="login-password" [(ngModel)]="loginPassword" name="password" required>
+                    </div>
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+          </div>
+        </div>
+      
+        <div *ngIf="isLoggedIn">
+          <!-- Show content only accessible to logged-in users -->
+          <h2>Welcome, {{ loginUsername }}!</h2>
+          <!-- Add more content here -->
+        </div>
+      </div>      
+     
+      <div *ngSwitchCase="'about'">
+          <h1>About Us</h1>
+          <p style="font-size: x-large;">
+            The main idea behind this website is to track all your workout progress by
+            keeping a record of it and providing you the best guide of workout program 
+            in links, docs, and visual format,
+            Currently under testing purpose for now only providing guides and links of 
+            workout programs.
+          </p>
+      </div>
+      <div *ngSwitchCase="'start'">
+          <div style="color: rgb(78, 207, 207); font-size: larger; text-align: left;">
+            <ol>
+                <li>Pushups -- Muscles engage -- Back -- Triceps -- biceps -- chest -- core -- 3 sets -- 12 reps</li>
+                <img src="/pushups.jpg" class="zoomimage" (click)="toggleZoom($event)" style="width: 100px; height: 200px; padding-top: 30px; padding-bottom: 30px; margin-left: 150px;">
+                <li>Skipping -- Muscles engage -- Full body</li>
+                <img src="/skipping.jpg" class="zoomimage" (click)="toggleZoom($event)" style="width: 100px; height: 100px; padding-top: 30px; padding-bottom: 30px; margin-left: 150px;">
+                <li>Dieting -- Hormone engage -- Full body</li>
+                <img src="/diet.jpg" class="zoomimage" (click)="toggleZoom($event)" style="width: 100px; height: 150px; padding-top: 30px; padding-bottom: 30px; margin-left: 150px;">
+            </ol>
+            <button (click)="startWorkout()">Start Workout</button>
+            <!-- Display the remaining workout time -->
+            <p *ngIf="workoutPhase > 0">Time left: {{ workoutTimeLeft }} seconds</p>
+          </div>
+      </div>
+      <div *ngSwitchDefault>
+          <h1>Welcome!</h1>
+          <p>Select an icon to view content.</p>
+      </div>
+  </ng-container>
+</div>

@@ -1,0 +1,47 @@
+/*css created by aryanK*/
+/*header and para part basics*/
+.h1{
+    color: rgb(250, 250, 250);
+    font-style: italic;
+    background-color: black;
+    text-align: center;
+}
+.p1{
+    color: rgb(0, 1, 3);
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+}
+/*setting up 1st menu bar*/
+.bar1{
+    width: 100%;
+    background-color: black;
+    overflow: auto;
+}
+.iconbar1{
+    display: inline-block;
+    width: auto;
+    color: rgb(117, 184, 50);
+    text-align: center;
+    padding: 52px 179px;
+    font-size: 25px;
+    transition: all 0.5s ease;
+}
+.iconbar1:hover{
+    background-color: rgb(77, 13, 77);
+}
+/*setting up container in which changes will occur as per clicked icons*/
+.container1{
+    background-color: black;
+    color: rgb(152, 155, 148);
+    border-style: groove;
+    border-color: brown;
+    text-align: center;
+}
+/*Setting up zoom-in-out features*/
+.zoomimage{
+    transition: transform 0.3s ease; 
+    cursor: pointer;
+}
+.zoomimage.zoomin{
+    transform: scale(5);
+}
